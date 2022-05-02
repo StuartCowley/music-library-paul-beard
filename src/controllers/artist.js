@@ -7,7 +7,7 @@ exports.createArtist = async (req, res) => {
 
     try {
         await db.query(
-            "INSERT INTO Artist (name, genre) VALUES (?,?)",
+            'INSERT INTO Artist (name, genre) VALUES (?,?)',
             [
                 name,
                 genre
@@ -22,4 +22,16 @@ exports.createArtist = async (req, res) => {
     await db.end();
  };
 
+ exports.readArtist = async (req, res) => {
+    const db = await getDb();
+
+    try {
+        const [artists] = await db.query('SELECT * FROM Artist');
+        res.status(200).json(artists);
+    } catch(err) {
+        res.sendStatus(500).json(err);
+    }
+
+    await db.end();
+ }
 
