@@ -58,28 +58,22 @@ exports.createArtist = async (req, res) => {
      const {artistId} = req.params;
      const data = req.body;
 
-
-     const [[artist]] = await db.query('SELECT * FROM Artist WHERE id = ?', [
-        artistId,
-    ]);
-
-    if (!artist) {
-        res.sendStatus(404);
-    } else {
-        await db.query('UPDATE Artist SET ? WHERE id = ?', [
+     try {
+         const [
+             { affectedRows },
+            ] = await db.query('UPDATE Artist SET ? WHERE id = ?', [
             data,
             artistId
         ]);
-        const [[artist]] = await db.query('SELECT * FROM Artist WHERE id = ?', [
-            artistId,
-        ]);
-        res.status(200).json(artist);
-    }
-
-     await db.query('UPDATE Artist SET ? WHERE id = ?', [
-         data,
-         artistId
-     ]);
+        
+        if (!affectedRows) {
+            res.sendStatus(404);
+        } else {
+            res.status(200).json(affectedRows);
+        }
+     } catch(err) {
+         res.sendStatus(500);
+     }
 
      await db.end();
 
