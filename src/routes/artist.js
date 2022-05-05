@@ -10,6 +10,8 @@ router.get ('/', artistController.readArtist);
 
 router.post ('/', artistController.createArtist);
 
+router.patch ('/:artistId', artistController.patchArtistById);
+
 
 
 
