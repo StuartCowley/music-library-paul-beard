@@ -12,6 +12,8 @@ router.post ('/', artistController.createArtist);
 
 router.patch ('/:artistId', artistController.patchArtistById);
 
+router.delete ('/:artistId', artistController.deleteArtistById);
+
 
 
 
