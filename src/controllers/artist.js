@@ -5,7 +5,7 @@ const getDb = require('../services/db');
 exports.createArtist = async (req, res) => {
     const db = await getDb();
     const { name, genre } = req.body;
-
+   console.log('createArtist Controller')
     try {
         await db.query(
             'INSERT INTO Artist (name, genre) VALUES (?,?)',
@@ -22,6 +22,8 @@ exports.createArtist = async (req, res) => {
     //db.close();
     await db.end();
  };
+
+
 
  exports.readArtist = async (req, res) => {
     const db = await getDb();
